@@ -32,7 +32,7 @@ services:
     restart: always
     tty: true
     volumes:
-      - ./api-server:/app
+      - ./src/api-server:/app
   app-server:
     container_name: app-server
     build: 
@@ -48,5 +48,5 @@ services:
           memory: 2G
     restart: always
     volumes:
-      - ./app-server/:/app
+      - ./src/app-server/:/app
 

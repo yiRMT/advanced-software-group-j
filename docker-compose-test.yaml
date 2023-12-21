@@ -35,7 +35,7 @@ services:
     ports:
       - 8001:8080
     volumes:
-      - ./api-server/:/app
+      - ./src/api-server/:/app
 #  app-server:
 #    container_name: app-server
 #    build: 
@@ -54,5 +54,5 @@ services:
 #    ports:
 #      - 8002:8080
 #    volumes:
-#      - ./app-server/:/app
+#      - ./src/app-server/:/app
 

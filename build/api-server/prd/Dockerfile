@@ -7,7 +7,7 @@ RUN pip install pipenv \
 FROM python:3.11-slim
 ENV PYTHONUNBUFFERED=1
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY ./api-server ./
+COPY /src/api-server ./
 EXPOSE 8080/tcp
 ## TODO: hostのIPは変更が必要かもしれないので要調査
 CMD pipenv run uvicorn main:app --reload --host 0.0.0.0 --port 8080

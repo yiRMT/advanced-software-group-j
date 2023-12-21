@@ -1,7 +1,7 @@
 FROM python:3.11 AS builder
 
 WORKDIR /app
-COPY ./api-server .
+COPY /src/api-server .
 RUN pip install pipenv \
  && pipenv install --system
 EXPOSE 8080
