@@ -38,15 +38,11 @@ services:
     build: 
       context: .
       dockerfile: ./build/app-server/dev/Dockerfile
-    deploy:
-      resources:
-        reservations:
-          cpus: '0.5'
-          memory: 1G
-        limits:
-          cpus: '1'
-          memory: 2G
-    restart: always
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
+    tty: true
     volumes:
-      - ./src/app-server/:/app
+      - ./src/app-server:/app
 

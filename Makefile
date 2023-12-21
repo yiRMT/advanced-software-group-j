@@ -3,6 +3,6 @@ test:
 test-build:
 	docker-compose --file=docker-compose-test.yaml up --build
 run:
-	docker-compose up
+	docker-compose up -d
 run-build:
-	docker-compose up --build
+	docker-compose up --build -d
