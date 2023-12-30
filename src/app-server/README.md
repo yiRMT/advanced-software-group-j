@@ -8,14 +8,20 @@ $ make run-build
 ```
 コンテナに入ってください
 ```bash
-$ docker exec -it コンテナID /bin/sh
+$ docker exec -it app-server /bin/sh
+```
+本来ならDockerコンテナ作成時に `node_modules` が作成されるはずですが、作成されないので手動でインストールします。
+```bash
+$ yarn install
 ```
 コンテナ内でExpoの開発サーバを立てます。本番環境ではこれをDockerファイルに含めます。
 ```bash
-$ yarn expo
+$ yarn start
 ```
-これでlocalhostの8081番ポートを使ってデバッグが可能です。
-デバッグはPC上のエミュレータかExpo Goアプリを用いてください。
-Expo Goのインストールは[こちら](https://expo.dev/client)。
+これでPCのプライベートIPアドレスの8081番ポートを使ってホットリロードを使ったデバッグが可能です。
+`yarn start` 実行後にターミナルに表示されるQRコードをiPhoneまたはAndroid端末で開いてください。
 
-- Expoの仕様上`App.js`は`/src/app-server`に配置する必要あり
+## 使用ライブラリ
+
+- [React Native](https://reactnative.dev)
+- [Expo](https://expo.dev)

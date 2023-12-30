@@ -38,10 +38,12 @@ services:
     build: 
       context: .
       dockerfile: ./build/app-server/dev/Dockerfile
+    environment:
+      - REACT_NATIVE_PACKAGER_HOSTNAME=${LOCAL_IP_ADDR}
     ports:
-      - 8081:8081
-      - 8082:8082
-      - 8083:8083
+      - ${LOCAL_IP_ADDR}:8081:8081
+      - ${LOCAL_IP_ADDR}:8082:8082
+      - ${LOCAL_IP_ADDR}:8083:8083
     tty: true
     volumes:
       - ./src/app-server:/app
