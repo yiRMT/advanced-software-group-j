@@ -25,3 +25,4 @@ $ yarn start
 
 - [React Native](https://reactnative.dev)
 - [Expo](https://expo.dev)
+- [React Navigation](https://reactnavigation.org)
