@@ -2,14 +2,18 @@
 // シャトルバスの時刻表を表示するScreen
 
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet } from 'react-native';
 
 const BusScreen: React.FC = () => {
   // 現在時刻と最も近い発車時刻の便を強調表示したい
   return (
-    <View>
-      <Text style={styles.largeText}>ここにシャトルバスの時刻表を表示</Text>
-    </View>
+    <SafeAreaView 
+      style={{padding: 20, flex: 1, alignItems: 'center', justifyContent: 'center'}}
+    >
+      <Text style={styles.largeText}>
+        ここにシャトルバスの時刻表を表示
+      </Text>
+    </SafeAreaView>
   );
 };
 
