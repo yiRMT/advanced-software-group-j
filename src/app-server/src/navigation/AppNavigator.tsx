@@ -12,35 +12,35 @@ const Stack = createNativeStackNavigator();
 // お店検索とバスの画面はBottomTabで管理する
 const Tab = createBottomTabNavigator();
 
+// BottomTabに表示するタブを管理
 const AppNavigator: React.FC = () => {
   return (
     <Tab.Navigator
-        initialRouteName="お店検索"
-        screenOptions={{
-          tabBarInactiveTintColor: 'gray',
-          // headerShown: false,
-          
+      initialRouteName="お店検索"
+      screenOptions={{
+        tabBarInactiveTintColor: 'gray',
+        // headerShown: false,  // デフォルトヘッダー表示の有無
+      }}
+    >
+      <Tab.Screen
+        name="お店検索"
+        component={SearchScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcon name="store-search" color={color} size={size} />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="お店検索"
-          component={SearchScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcon name="store-search" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="シャトルバス"
-          component={BusScreen}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcon name="bus-clock" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>  
+      />
+      <Tab.Screen
+        name="シャトルバス"
+        component={BusScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcon name="bus-clock" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
