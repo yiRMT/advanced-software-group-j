@@ -3,22 +3,25 @@
 
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import Shop from '../interface/Shop';
 
 // ShopListScreenへ与える引数を定義
 interface ShopDetailScreenProps {
   route: {
     params: {
-      shop_id: string;  // お店のid
+      shop: Shop;
     };
   };
 }
 
 const ShopDetailScreen: React.FC<ShopDetailScreenProps> = ({ route }) => {
+  const { shop } = route.params;
   // APIでidを引数としてお店情報をJSON形式で取得して必要な詳細情報を表示する
+  // 仮でShopインタフェースで店情報を取得
   return (
     <SafeAreaView style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text style={styles.largeText}>
-        id={route.params.shop_id} のお店がもつ詳細情報を表示する。
+        id={shop.id} のお店がもつ詳細情報を表示する。
       </Text>
     </SafeAreaView>
   );

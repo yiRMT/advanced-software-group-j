@@ -4,6 +4,7 @@
 import React from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Shop from '../interface/Shop';
 
 // ShopListScreenへ与える引数を定義
 interface ShopListScreenProps {
@@ -12,17 +13,6 @@ interface ShopListScreenProps {
       campus: string; // キャンパス名
     };
   };
-}
-
-// お店（Shop）のインタフェース
-interface Shop {
-  id: string;           // 店のID
-  name: string;         // 店の名前
-  location: string;     // 住所
-  openingTime: string;  // 営業開始時刻
-  closingTime: string;  // 営業終了時刻
-  imageUrl: string;     // 店の画像
-  //   campus: string;       // 近いキャンパス
 }
 
 // ダミーの店データ
@@ -72,7 +62,7 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   const renderShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
       style={styles.shopItem}
-      onPress={() => navigation.navigate('お店の詳細', { shop_id: item.id })}
+      onPress={() => navigation.navigate('お店の詳細', { shop: item })}
     >
       <Image source={{ uri: item.imageUrl }} style={styles.shopImage} />
       <Text style={styles.shopName}>{item.name}</Text>
