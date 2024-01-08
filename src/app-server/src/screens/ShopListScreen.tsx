@@ -1,10 +1,11 @@
 // ShopListScreen.tsx
 // キャンパス名に合わせて現在開いているお店の一覧を表示するScreen
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Shop from '../interface/Shop';
+import shopData from '../test_data/shopData.json' // ダミーの店データ
 
 // ShopListScreenへ与える引数を定義
 interface ShopListScreenProps {
@@ -15,49 +16,24 @@ interface ShopListScreenProps {
   };
 }
 
-// ダミーの店データ
-const shopData: Shop[] = [
-  {
-    id: '1',
-    name: 'Shop 1',
-    location: 'Location 1',
-    openingTime: '14:00',
-    closingTime: '23:00',
-    imageUrl: 'https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png'
-    // campus: '中百舌鳥' 
-  },
-  {
-    id: '2',
-    name: 'Shop 2',
-    location: 'Location 2',
-    openingTime: '10:00',
-    closingTime: '18:00',
-    imageUrl: 'https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png'
-    // campus: '杉本' 
-  },
-  {
-    id: '3',
-    name: 'Shop 3',
-    location: 'Location 3',
-    openingTime: '10:00',
-    closingTime: '18:00',
-    imageUrl: 'https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png'
-    // campus: '杉本' 
-  },
-  {
-    id: '4',
-    name: 'Shop 4',
-    location: 'Location 4',
-    openingTime: '10:00',
-    closingTime: '18:00',
-    imageUrl: 'https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png'
-    // campus: '杉本' 
-  },
-];
-
 // ShopListScreenの表示
 const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   const navigation = useNavigation();
+  // 以下，APIを叩いてJSON形式のshopDataを取得するコード
+  // const [shopData, setJsonData] = useState<any | null>(null); 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch('URL'); // JSONファイルのパスを指定（URL）
+  //       const data = await response.json();
+  //       setJsonData(data);
+  //     } catch (error) {
+  //       console.error('Error fetching JSON data:', error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const renderShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
@@ -79,7 +55,7 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
         {route.params.campus}キャンパス周辺で、いま開いているお店一覧
       </Text>
       <FlatList
-        data={shopData}
+        data={shopData.infos}
         keyExtractor={(item) => item.id}
         renderItem={renderShopItem}
       />
