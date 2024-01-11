@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Shop from '../interface/Shop';
-import shopData from '../test_data/shopData.json' // ダミーの店データ
+import { fetchShopList } from '../libs/fetchShopData';
 
 // ShopListScreenへ与える引数を定義
 interface ShopListScreenProps {
@@ -19,21 +19,20 @@ interface ShopListScreenProps {
 // ShopListScreenの表示
 const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   const navigation = useNavigation();
-  // 以下，APIを叩いてJSON形式のshopDataを取得するコード
-  // const [shopData, setJsonData] = useState<any | null>(null); 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('URL'); // JSONファイルのパスを指定（URL）
-  //       const data = await response.json();
-  //       setJsonData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching JSON data:', error);
-  //     }
-  //   };
 
-  //   fetchData();
-  // }, []);
+  // 以下，APIを叩いてJSON形式のshopDataを取得するコード
+  const [shopData, setShopData] = useState<any>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetchShopList(route.params.campus);
+        console.log(data[0]);
+        setShopData(data);
+      } catch (error) {
+        console.error('Error fetching shop data: ', error);
+      }
+    })();
+  }, []);
 
   const ShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
@@ -57,7 +56,7 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
     <SafeAreaView style={styles.safearea}>
       <View style={styles.container}>
         <FlatList
-          data={shopData.infos}
+          data={shopData}
           keyExtractor={(item) => item.id}
           renderItem={ShopItem}
         />
@@ -70,11 +69,11 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   shopItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    paddingHorizontal: 16,
     paddingVertical: 8,
   },
   shopItemContainer: {
@@ -86,7 +85,8 @@ const styles = StyleSheet.create({
   shopImage: {
     height: 60,
     width: 60,
-    resizeMode: 'contain'
+    resizeMode: 'fill',
+    borderRadius: 8,
   },
   shopInfoContainer: {
     flex: 1,
