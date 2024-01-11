@@ -18,12 +18,22 @@ const ShopStackNavigator = () => {
   return(
     <Stack.Navigator
       screenOptions={{
-        // headerShown: false,  // デフォルトヘッダー表示の有無
-        animation: 'slide_from_right'
+        animation: "slide_from_right"
       }}
     >
-      <Stack.Screen name="お店探し" component={SearchScreen} />
-      <Stack.Screen name="お店の詳細" component={ShopDetailScreen} />
+      <Stack.Screen
+        name="お店探し"
+        
+        component={SearchScreen} 
+        options={({route}) => ({
+          headerShown: route.state && route.state.index > 0 ? true : false,
+        })}
+      />
+      <Stack.Screen
+        name="お店の詳細"
+        component={ShopDetailScreen}
+        options={{headerShown: true}}
+      />
     </Stack.Navigator>
   );
 };
@@ -35,7 +45,7 @@ const AppNavigator: React.FC = () => {
       initialRouteName="お店検索"
       screenOptions={{
         tabBarInactiveTintColor: 'gray',
-        headerShown: false,  // デフォルトヘッダー表示の有無
+        // headerShown: false,  // デフォルトヘッダー表示の有無
       }}
     >
       <Tab.Screen

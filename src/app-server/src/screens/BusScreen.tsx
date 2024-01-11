@@ -1,25 +1,65 @@
 // screens/BusScreen.tsx
 // シャトルバスの時刻表を表示するScreen
 
-import React from 'react';
-import { FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity, TextStyle } from 'react-native';
 import Bus from '../interface/Bus';
 import busData from '../test_data/bus_output.json'; // バス時刻表の仮データJSONファイル
 
-const renderBusItem = ({ item }: { item: Bus }) => (
-  <TouchableOpacity style={styles.busItem}>
-    <Text>
-      <Text style={styles.busNum}>{item.bus_num}  </Text>
-      <Text style={styles.busTimeNormal}>{item.start_time}</Text>
-    </Text>
-  </TouchableOpacity>
-);
+// const setTimeStyle = (busTime: string): TextStyle => {
+  
+
+//   // 現在時刻から最も近い発車時刻の文字スタイルを変更（react.useEffect の利用）
+//   useEffect(() => {
+//     const currentTime = new Date();
+//     const [busHour, busMinute]: number[] = busTime.split(':').map(Number);
+//     const diffHours = currentTime.getHours() - busHour;
+//     const diffMinutes = currentTime.getMinutes() - busMinute;
+
+//     if (busHour >= currentTime.getHours() && diffHours <= 1 && diffMinutes <= 30) {
+//       setStyle(styles.busTimeHighlight);
+//     } else {
+//       setStyle(styles.busTimeNormal);
+//     }
+//   }, []);
+
+//   return styles.busTimeNormal;
+// };
+
+const renderBusItem = ({ item }: { item: Bus }) => {
+  const [TimeStyle, setStyle] = useState(styles.busTimeNormal);
+  // const TimeStyle = styles.busTimeNormal;
+
+  // useEffect(() => {
+  //   const currentTime = new Date();
+  //   const [busHour, busMinute]: number[] = item.start_time.split(':').map(Number);
+  //   const diffHours = currentTime.getHours() - busHour;
+  //   const diffMinutes = currentTime.getMinutes() - busMinute;
+
+  //   if (busHour >= currentTime.getHours() && diffHours <= 1 && diffMinutes <= 30) {
+  //     setStyle(styles.busTimeHighlight);
+  //   } else {
+  //     setStyle(styles.busTimeNormal);
+  //   }
+  // }, []);
+
+  return (
+    <TouchableOpacity style={styles.busItem}>
+      <Text>
+        <Text style={styles.busNum}>{item.bus_num}  </Text>
+        <Text style={TimeStyle}>
+          {item.start_time}
+        </Text>
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 const BusScreen: React.FC = () => {
   // 現在時刻と最も近い発車時刻の便を強調表示したい
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.largeText}>中百舌鳥⇔杉本 シャトルバス時刻表</Text>
+      <Text style={styles.largeText}>中百舌鳥⇔杉本 シャトルバス出発時刻表</Text>
       <FlatList
         data={busData}
         keyExtractor={(item) => item.bus_num}
