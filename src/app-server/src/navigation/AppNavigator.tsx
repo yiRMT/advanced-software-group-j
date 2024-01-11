@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import BusScreen from '../screens/BusScreen';
-import ShopTabNavigator from '../screens/ShopNavigator';
+import ShopSearchScreen from '../screens/ShopSearchScreen';
 // import ShopListScreen from '../screens/ShopListScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 
@@ -23,7 +23,7 @@ const ShopStackNavigator = () => {
     >
       <Stack.Screen
         name="お店探し"
-        component={ShopTabNavigator} 
+        component={ShopSearchScreen} 
         options={({route}) => ({
           headerShown: route.state && route.state.index > 0 ? true : false,
         })}

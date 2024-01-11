@@ -2,7 +2,7 @@
 // キャンパス名に合わせて現在開いているお店の一覧を表示するScreen
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Shop from '../interface/Shop';
 import shopData from '../test_data/shopData.json' // ダミーの店データ
@@ -35,31 +35,34 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   //   fetchData();
   // }, []);
 
-  const renderShopItem = ({ item }: { item: Shop }) => (
+  const ShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
       style={styles.shopItem}
       onPress={() => navigation.navigate('お店の詳細', { shop: item })}
     >
-      <Image source={{ uri: item.imageUrl }} style={styles.shopImage} />
-      <Text style={styles.shopName}>{item.name}</Text>
-      <Text style={styles.shopLocation}>{item.location}</Text>
-      <Text style={styles.businessHours}>
-        {`営業時間: ${item.openingTime} - ${item.closingTime}`}
-      </Text>
+      <View style={styles.shopItemContainer} >
+        <Image source={{ uri: item.imageUrl }} style={styles.shopImage} />
+        <View style={styles.shopInfoContainer}>
+          <Text style={styles.shopName}>{item.name}</Text>
+          <Text style={styles.shopLocation}>{item.location}</Text>
+          <Text style={styles.businessHours}>
+            {`営業時間: ${item.openingTime} - ${item.closingTime}`}
+          </Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={{flex: 0, alignItems: 'center', justifyContent: 'center'}}>
-        {route.params.campus}キャンパス周辺で、いま開いているお店一覧
-      </Text>
-      <FlatList
-        data={shopData.infos}
-        keyExtractor={(item) => item.id}
-        renderItem={renderShopItem}
-      />
-    </View>
+    <SafeAreaView style={styles.safearea}>
+      <View style={styles.container}>
+        <FlatList
+          data={shopData.infos}
+          keyExtractor={(item) => item.id}
+          renderItem={ShopItem}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -74,6 +77,22 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     paddingVertical: 8,
   },
+  shopItemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  shopImage: {
+    height: 60,
+    width: 60,
+    resizeMode: 'contain'
+  },
+  shopInfoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    gap: 4,
+  },
   shopName: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -86,12 +105,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
   },
-  shopImage: {
-    width: 100,
-    height: 100,
+  safearea: {
+    flex: 1,
     resizeMode: 'cover',
-    borderRadius: 5,
-  },
+    justifyContent: 'center'
+  }
 });
 
 export default ShopListScreen;
