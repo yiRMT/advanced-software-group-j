@@ -3,7 +3,7 @@
 // ShopListScreenへキャンパス名を引数で与えてTopTabのスクリーンとして表示
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ShopListScreen from './ShopListScreen';
 
@@ -31,8 +31,8 @@ const TopMessage: React.FC = () => {
 
   // 時間帯に合わせたトップメッセージを表示
   return (
-    <View style={{ backgroundColor: 'white', padding: 10 }}>
-      <Text style={styles.largeText}>{meal}、どこいく？</Text>
+    <View style={styles.topMessageContainer}>
+      <Text style={styles.topMessageText}>{meal}、どこいく？</Text>
     </View>
   )
 };
@@ -56,9 +56,9 @@ const SugimotoScreen: React.FC = () => {
 };
 
 // お店検索Screen
-const SearchScreen: React.FC = () => {
+const ShopSearchScreen: React.FC = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safearea}>
       <TopMessage />
       <Tab.Navigator
         initialRouteName="Nakamozu"
@@ -78,21 +78,29 @@ const SearchScreen: React.FC = () => {
           }}
         />
       </Tab.Navigator>
-    </View>
+    </SafeAreaView>
   );
 };
 
 // スタイルシート
 const styles = StyleSheet.create({
-  smallText: {
-    fontSize: 12, // 小さい文字の大きさ
+  safearea: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  normalText: {
-    fontSize: 16, // 通常の文字の大きさ
+  container: {
+    flex: 1,
+    height: '100%',
   },
-  largeText: {
-    fontSize: 20, // 大きい文字の大きさ
+  topMessageContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16
+  },
+  topMessageText: {
+    fontSize: 20
   },
 });
 
-export default SearchScreen;
+export default ShopSearchScreen;
