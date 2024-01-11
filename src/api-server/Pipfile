@@ -6,10 +6,6 @@ name = "pypi"
 [packages]
 fastapi = "*"
 uvicorn = "*"
-gspread = "*"
-oauth2client = "*"
-pandas = "*"
-googlemaps = "*"
 
 [dev-packages]
 
