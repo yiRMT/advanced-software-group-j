@@ -23,7 +23,6 @@ const ShopStackNavigator = () => {
     >
       <Stack.Screen
         name="お店探し"
-        
         component={SearchScreen} 
         options={({route}) => ({
           headerShown: route.state && route.state.index > 0 ? true : false,
