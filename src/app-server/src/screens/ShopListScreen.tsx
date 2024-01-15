@@ -2,7 +2,9 @@
 // キャンパス名に合わせて現在開いているお店の一覧を表示するScreen
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Image } from 'expo-image';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Shop from '../interface/Shop';
 import { fetchShopList } from '../libs/fetchShopData';
@@ -26,7 +28,6 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
     (async () => {
       try {
         const data = await fetchShopList(route.params.campus);
-        console.log(data[0]);
         setShopData(data);
       } catch (error) {
         console.error('Error fetching shop data: ', error);
@@ -37,17 +38,19 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   const ShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
       style={styles.shopItem}
+      // @ts-ignore
       onPress={() => navigation.navigate('お店の詳細', { shop: item })}
     >
       <View style={styles.shopItemContainer} >
-        <Image source={{ uri: item.imageUrl }} style={styles.shopImage} />
+        <Image style={styles.shopImage} source={{ uri: item.imageUrl }} />
         <View style={styles.shopInfoContainer}>
           <Text style={styles.shopName}>{item.name}</Text>
-          <Text style={styles.shopLocation}>{item.location}</Text>
-          <Text style={styles.businessHours}>
+          <Text style={styles.shopOptionalInfo}>{item.location.address}</Text>
+          <Text style={styles.shopOptionalInfo}>
             {`営業時間: ${item.openingTime} - ${item.closingTime}`}
           </Text>
         </View>
+        <MaterialIcons name="chevron-right" size={30} color="grey" />
       </View>
     </TouchableOpacity>
   );
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
   shopItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
     paddingVertical: 8,
   },
   shopItemContainer: {
@@ -85,7 +88,6 @@ const styles = StyleSheet.create({
   shopImage: {
     height: 60,
     width: 60,
-    resizeMode: 'fill',
     borderRadius: 8,
   },
   shopInfoContainer: {
@@ -97,13 +99,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  shopLocation: {
+  shopOptionalInfo: {
     fontSize: 14,
     color: '#888',
-  },
-  businessHours: {
-    fontSize: 14,
-    color: '#555',
   },
   safearea: {
     flex: 1,
