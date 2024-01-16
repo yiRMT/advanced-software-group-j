@@ -2,10 +2,12 @@
 // キャンパス名に合わせて現在開いているお店の一覧を表示するScreen
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Image } from 'expo-image';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Shop from '../interface/Shop';
-import shopData from '../test_data/shopData.json' // ダミーの店データ
+import { fetchShopList } from '../libs/fetchShopData';
 
 // ShopListScreenへ与える引数を定義
 interface ShopListScreenProps {
@@ -19,47 +21,50 @@ interface ShopListScreenProps {
 // ShopListScreenの表示
 const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
   const navigation = useNavigation();
+
   // 以下，APIを叩いてJSON形式のshopDataを取得するコード
-  // const [shopData, setJsonData] = useState<any | null>(null); 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('URL'); // JSONファイルのパスを指定（URL）
-  //       const data = await response.json();
-  //       setJsonData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching JSON data:', error);
-  //     }
-  //   };
+  const [shopData, setShopData] = useState<any>([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetchShopList(route.params.campus);
+        setShopData(data);
+      } catch (error) {
+        console.error('Error fetching shop data: ', error);
+      }
+    })();
+  }, []);
 
-  //   fetchData();
-  // }, []);
-
-  const renderShopItem = ({ item }: { item: Shop }) => (
+  const ShopItem = ({ item }: { item: Shop }) => (
     <TouchableOpacity
       style={styles.shopItem}
+      // @ts-ignore
       onPress={() => navigation.navigate('お店の詳細', { shop: item })}
     >
-      <Image source={{ uri: item.imageUrl }} style={styles.shopImage} />
-      <Text style={styles.shopName}>{item.name}</Text>
-      <Text style={styles.shopLocation}>{item.location}</Text>
-      <Text style={styles.businessHours}>
-        {`営業時間: ${item.openingTime} - ${item.closingTime}`}
-      </Text>
+      <View style={styles.shopItemContainer} >
+        <Image style={styles.shopImage} source={{ uri: item.imageUrl }} />
+        <View style={styles.shopInfoContainer}>
+          <Text style={styles.shopName}>{item.name}</Text>
+          <Text style={styles.shopOptionalInfo}>{item.location.address}</Text>
+          <Text style={styles.shopOptionalInfo}>
+            {`営業時間: ${item.openingTime} - ${item.closingTime}`}
+          </Text>
+        </View>
+        <MaterialIcons name="chevron-right" size={30} color="grey" />
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={{flex: 0, alignItems: 'center', justifyContent: 'center'}}>
-        {route.params.campus}キャンパス周辺で、いま開いているお店一覧
-      </Text>
-      <FlatList
-        data={shopData.infos}
-        keyExtractor={(item) => item.id}
-        renderItem={renderShopItem}
-      />
-    </View>
+    <SafeAreaView style={styles.safearea}>
+      <View style={styles.container}>
+        <FlatList
+          data={shopData}
+          keyExtractor={(item) => item.id}
+          renderItem={ShopItem}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -67,31 +72,42 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   shopItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    paddingHorizontal: 8,
     paddingVertical: 8,
+  },
+  shopItemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+  },
+  shopImage: {
+    height: 60,
+    width: 60,
+    borderRadius: 8,
+  },
+  shopInfoContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    gap: 4,
   },
   shopName: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  shopLocation: {
+  shopOptionalInfo: {
     fontSize: 14,
     color: '#888',
   },
-  businessHours: {
-    fontSize: 14,
-    color: '#555',
-  },
-  shopImage: {
-    width: 100,
-    height: 100,
+  safearea: {
+    flex: 1,
     resizeMode: 'cover',
-    borderRadius: 5,
-  },
+    justifyContent: 'center'
+  }
 });
 
 export default ShopListScreen;

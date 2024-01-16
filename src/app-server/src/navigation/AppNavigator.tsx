@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import BusScreen from '../screens/BusScreen';
-import SearchScreen from '../screens/SearchScreen';
+import ShopSearchScreen from '../screens/ShopSearchScreen';
 // import ShopListScreen from '../screens/ShopListScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 
@@ -18,12 +18,21 @@ const ShopStackNavigator = () => {
   return(
     <Stack.Navigator
       screenOptions={{
-        // headerShown: false,  // デフォルトヘッダー表示の有無
-        animation: 'slide_from_right'
+        animation: "slide_from_right"
       }}
     >
-      <Stack.Screen name="お店探し" component={SearchScreen} />
-      <Stack.Screen name="お店の詳細" component={ShopDetailScreen} />
+      <Stack.Screen
+        name="お店探し"
+        component={ShopSearchScreen} 
+        options={({route}) => ({
+          headerShown: route.state && route.state.index > 0 ? true : false,
+        })}
+      />
+      <Stack.Screen
+        name="お店の詳細"
+        component={ShopDetailScreen}
+        options={{headerShown: true}}
+      />
     </Stack.Navigator>
   );
 };
@@ -35,7 +44,7 @@ const AppNavigator: React.FC = () => {
       initialRouteName="お店検索"
       screenOptions={{
         tabBarInactiveTintColor: 'gray',
-        headerShown: false,  // デフォルトヘッダー表示の有無
+        headerShown: false,
       }}
     >
       <Tab.Screen
