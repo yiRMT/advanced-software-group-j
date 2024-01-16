@@ -30,6 +30,8 @@ services:
           cpus: '1'
           memory: 2G
     restart: always
+    ports:
+      - 8080:8080
     tty: true
     volumes:
       - ./src/api-server:/app
