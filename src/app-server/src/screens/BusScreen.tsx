@@ -1,7 +1,7 @@
 // screens/BusScreen.tsx
 // シャトルバスの時刻表を表示するScreen
 import React, { useEffect, useState, useRef } from 'react';
-import { FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
+import { View, FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import Bus from '../interface/Bus';
 import busData from '../test_data/bus_output.json';
 
@@ -45,27 +45,28 @@ const BusScreen: React.FC = () => {
     return styles.busTimeNormal;
   };
 
-  const renderBusItem = ({ item }: { item: Bus }) => {
+  const BusItem = ({ item }: { item: Bus }) => {
     const timeStyle = setTimeStyle({ bus: item });
 
     return (
-      <SafeAreaView
-        style={styles.busItem}>
+      <View style={styles.busItem}>
         <Text>
           <Text style={styles.busNum}>{item.bus_num} </Text>
           <Text style={timeStyle}>{item.start_time}</Text>
         </Text>
-      </SafeAreaView>
+      </View>
     );
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.largeText}>中百舌鳥⇔杉本 シャトルバス出発時刻表</Text>
+    <SafeAreaView style={styles.safearea}>
+      <View style={styles.topMessageContainer}>
+        <Text style={styles.topMessageText}>中百舌鳥 ⇔ 杉本</Text>
+      </View>
       <FlatList
         data={busData}
         keyExtractor={(item) => item.bus_num}
-        renderItem={renderBusItem}
+        renderItem={BusItem}
       />
     </SafeAreaView>
   );
@@ -104,6 +105,22 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: '#ff4b00',
   },
+  topMessageText: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  topMessageContainer: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16
+  },
+  safearea: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  }
 });
 
 export default BusScreen;

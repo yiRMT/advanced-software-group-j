@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     padding: 16
   },
   topMessageText: {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: 'bold'
   },
 });
 
