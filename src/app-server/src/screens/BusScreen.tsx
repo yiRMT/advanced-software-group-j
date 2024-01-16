@@ -24,7 +24,9 @@ const BusScreen: React.FC = () => {
         const [hour, minute] = bus.start_time.split(':').map(Number);
         return hour * 60 + minute;
       })
-      .filter(departureTime => departureTime > currentTime.getHours() * 60 + currentTime.getMinutes())
+      .filter(departureTime => 
+              departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) < 90
+              && departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) >= 0)
       .sort((a, b) => a - b)[0];
 
     setNextDeparture(nextDepartureTime || -1);
@@ -47,7 +49,8 @@ const BusScreen: React.FC = () => {
     const timeStyle = setTimeStyle({ bus: item });
 
     return (
-      <SafeAreaView>
+      <SafeAreaView
+        style={styles.busItem}>
         <Text>
           <Text style={styles.busNum}>{item.bus_num} </Text>
           <Text style={timeStyle}>{item.start_time}</Text>
@@ -82,13 +85,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 30,
     marginTop: 20,
-    textAlign: 'right'
   },
   busItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     paddingVertical: 8,
-    textAlign: 'left'
   },
   busNum: {
     fontSize: 26,
@@ -96,14 +97,12 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
   busTimeNormal: {
-    fontSize: 28,
+    fontSize: 40,
     color: '#005aff',
-    textAlign: 'left'
   },
   busTimeHighlight: {
-    fontSize: 28,
+    fontSize: 40,
     color: '#ff4b00',
-    textAlign: 'left'
   },
 });
 
