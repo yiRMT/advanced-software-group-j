@@ -2,19 +2,27 @@
 
 ## Getting started
 
-まだDocker Fileの用意ができていないので，とりあえずローカル環境でお願いします．
-
-- Node.js，Expo CLIがローカルにインストールされていることを前提とします
-
-必要なnode modulesをインストールします
+本プロジェクトのルートディレクトリでDockerコンテナを起動してください
 ```bash
-$ cd src/app-server
+$ make run-build
+```
+コンテナに入ってください
+```bash
+$ docker exec -it app-server /bin/sh
+```
+本来ならDockerコンテナ作成時に `node_modules` が作成されるはずですが、作成されないので手動でインストールします。
+```bash
 $ yarn install
 ```
-
-Expoの開発サーバを立てます
+コンテナ内でExpoの開発サーバを立てます。本番環境ではこれをDockerファイルに含めます。
 ```bash
-$ yarn expo
+$ yarn start
 ```
+これでPCのプライベートIPアドレスの8081番ポートを使ってホットリロードを使ったデバッグが可能です。
+`yarn start` 実行後にターミナルに表示されるQRコードをiPhoneまたはAndroid端末で開いてください。
 
-- Expoの仕様上`App.js`は`/src/app-server`に配置する必要あり
+## 使用ライブラリ
+
+- [React Native](https://reactnative.dev)
+- [Expo](https://expo.dev)
+- [React Navigation](https://reactnavigation.org)

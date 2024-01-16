@@ -3,6 +3,8 @@ test:
 test-build:
 	docker-compose --file=docker-compose-test.yaml up --build
 run:
-	docker-compose up
+	sh ./get-local-ip-addr.sh
+	docker-compose up -d
 run-build:
-	docker-compose up --build
+	sh ./get-local-ip-addr.sh
+	docker-compose up --build -d

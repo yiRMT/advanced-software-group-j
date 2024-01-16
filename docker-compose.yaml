@@ -33,20 +33,26 @@ services:
     tty: true
     volumes:
       - ./src/api-server:/app
-  # app-server:
-  #   container_name: app-server
-  #   build:
-  #     context: .
-  #     dockerfile: ./build/app-server/dev/Dockerfile
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         cpus: '0.5'
-  #         memory: 1G
-  #       limits:
-  #         cpus: '1'
-  #         memory: 2G
-  #   restart: always
-  #   volumes:
-  #     - ./src/app-server/:/app
+  app-server:
+    container_name: app-server
+    build: 
+      context: .
+      dockerfile: ./build/app-server/dev/Dockerfile
+    deploy:
+      resources:
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+        limits:
+          cpus: '1'
+          memory: 2G
+    environment:
+      - REACT_NATIVE_PACKAGER_HOSTNAME=${LOCAL_IP_ADDR}
+    ports:
+      - ${LOCAL_IP_ADDR}:8081:8081
+      - ${LOCAL_IP_ADDR}:8082:8082
+      - ${LOCAL_IP_ADDR}:8083:8083
+    tty: true
+    volumes:
+      - ./src/app-server:/app
 

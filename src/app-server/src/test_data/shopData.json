@@ -1,0 +1,36 @@
+{
+    "infos": [
+        {
+            "id": "1",
+            "name": "Shop 1",
+            "location": "location 1",
+            "openingTime": "14:00",
+            "closingTime": "23:00",
+            "imageUrl": "https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png"
+        },
+        {
+            "id": "2",
+            "name": "Shop 2",
+            "location": "location 2",
+            "openingTime": "10:00",
+            "closingTime": "18:00",
+            "imageUrl": "https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png"
+        },
+        {
+            "id": "3",
+            "name": "Shop 3",
+            "location": "location 3",
+            "openingTime": "10:00",
+            "closingTime": "18:00",
+            "imageUrl": "https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png"
+        },
+        {
+            "id": "4",
+            "name": "Shop 4",
+            "location": "location 4",
+            "openingTime": "10:00",
+            "closingTime": "18:00",
+            "imageUrl": "https://1.bp.blogspot.com/-I0Mwy1j09XU/VUIJ7AWQxrI/AAAAAAAAtbg/feTqQhXaMOw/s800/omise_shop_tatemono.png"
+        }
+    ]
+}
