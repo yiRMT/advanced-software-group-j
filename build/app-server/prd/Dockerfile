@@ -9,8 +9,6 @@ ARG PORT=8081
 ENV PORT $PORT
 EXPOSE $PORT
 
-ARG LOCAL_IP_ADDR
-
 COPY ./src/app-server/package.json ./src/app-server/yarn.lock ./
 RUN npm install --global expo-cli \
   && npm install --global @expo/ngrok@^4.1.0
