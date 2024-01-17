@@ -21,11 +21,9 @@ services:
     container_name: api-server
     build:
       context: .
-      dockerfile: ./build/api-server/dev/Dockerfile
+      dockerfile: ./build/api-server/prd/Dockerfile
     volumes:
       - ./src/api-server:/app
-    ports:
-      - 8080:8080
     deploy:
       resources:
         reservations:
@@ -40,12 +38,9 @@ services:
     container_name: app-server
     build: 
       context: .
-      dockerfile: ./build/app-server/dev/Dockerfile
+      dockerfile: ./build/app-server/prd/Dockerfile
     volumes:
       - ./src/app-server:/app
-    ports:
-      - 8082:8082
-      - 8083:8083
     deploy:
       resources:
         reservations:

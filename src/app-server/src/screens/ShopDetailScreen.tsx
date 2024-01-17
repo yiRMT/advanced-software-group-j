@@ -40,9 +40,9 @@ const ShopDetailScreen: React.FC<ShopDetailScreenProps> = ({ route }) => {
           )}
           <Text style={styles.shopInfoText}>{`${shop.openingTime} - ${shop.closingTime}`}</Text>
           <Text style={styles.shopInfoHeader}>決済方法</Text>
-          {shop.payment_methods.map((paymentMethod, index) => (
-            <Text key={index} style={styles.shopInfoText}>{paymentMethod}</Text>
-          ))}
+          {shop.payment.cash && <Text style={styles.shopInfoText}>現金</Text>}
+          {shop.payment.card && <Text style={styles.shopInfoText}>クレジットカード</Text>}
+          {shop.payment.paypay && <Text style={styles.shopInfoText}>PayPay</Text>}
           <Text style={styles.shopInfoHeader}>アクセス</Text>
           <Text style={styles.shopInfoText}>{shop.location.address}</Text>
           <MapView
