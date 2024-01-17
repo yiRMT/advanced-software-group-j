@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import Bus from '../interface/Bus';
 import busData from '../test_data/bus_output.json';
-import { fetchBusData } from '../libs/fetchBusData';
 
 const BusScreen: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<Date>(new Date()); // 現在時刻
@@ -20,23 +19,17 @@ const BusScreen: React.FC = () => {
 
   useEffect(() => {
     // 発車前の最も近い便を見つけるロジック
-    (async () => {
-      try {
-        const data = await fetchBusData();
-        const nextDepartureTime = data
-          .map(bus => {
-            const [hour, minute] = bus.start_time.split(':').map(Number);
-            return hour * 60 + minute;
-          })
-          .filter(departureTime => 
-                  departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) < 90
-                  && departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) >= 0)
-          .sort((a, b) => a - b)[0];
-        setNextDeparture(nextDepartureTime || -1);
-      } catch (error) {
-        console.error('Error fetching shop data: ', error);
-      }
-    })();
+    const nextDepartureTime = busData
+      .map(bus => {
+        const [hour, minute] = bus.start_time.split(':').map(Number);
+        return hour * 60 + minute;
+      })
+      .filter(departureTime => 
+              departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) < 90
+              && departureTime - (currentTime.getHours() * 60 + currentTime.getMinutes()) >= 0)
+      .sort((a, b) => a - b)[0];
+
+    setNextDeparture(nextDepartureTime || -1);
   }, [currentTime]);
 
   // Flat listで表示される各バス時刻のスタイルを定義
@@ -57,8 +50,10 @@ const BusScreen: React.FC = () => {
 
     return (
       <View style={styles.busItem}>
-        <Text style={styles.busNum}>{item.bus_num} </Text>
-        <Text style={timeStyle}>{item.start_time}</Text>
+        <Text>
+          <Text style={styles.busNum}>{item.bus_num} </Text>
+          <Text style={timeStyle}>{item.start_time}</Text>
+        </Text>
       </View>
     );
   };
@@ -66,7 +61,7 @@ const BusScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.safearea}>
       <View style={styles.topMessageContainer}>
-        <Text style={styles.topMessageText}>中百舌鳥 ⇔ 杉本 シャトルバス</Text>
+        <Text style={styles.topMessageText}>中百舌鳥 ⇔ 杉本</Text>
       </View>
       <FlatList
         data={busData}
@@ -78,16 +73,24 @@ const BusScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  busItem: {
+  smallText: {
+    fontSize: 12,
+  },
+  normalText: {
+    fontSize: 16,
+  },
+  largeText: {
+    fontSize: 20,
+  },
+  container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
+    padding: 30,
+    marginTop: 20,
+  },
+  busItem: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     paddingVertical: 8,
-    paddingHorizontal: 20
   },
   busNum: {
     fontSize: 26,

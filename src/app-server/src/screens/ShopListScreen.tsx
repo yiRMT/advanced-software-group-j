@@ -39,7 +39,7 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
     <TouchableOpacity
       style={styles.shopItem}
       // @ts-ignore
-      onPress={() => navigation.navigate('ShopDetailScreen', { shop: item })}
+      onPress={() => navigation.navigate('お店の詳細', { shop: item })}
     >
       <View style={styles.shopItemContainer} >
         <Image style={styles.shopImage} source={{ uri: item.imageUrl }} />
@@ -47,7 +47,7 @@ const ShopListScreen: React.FC<ShopListScreenProps> = ({ route }) => {
           <Text style={styles.shopName}>{item.name}</Text>
           <Text style={styles.shopOptionalInfo}>{item.location.address}</Text>
           <Text style={styles.shopOptionalInfo}>
-            {`営業時間: ${item.openingTime} - ${item.closingTime} (営業中)`}
+            {`営業時間: ${item.openingTime} - ${item.closingTime}`}
           </Text>
         </View>
         <MaterialIcons name="chevron-right" size={30} color="grey" />

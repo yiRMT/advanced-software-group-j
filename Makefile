@@ -1,12 +1,10 @@
-prd:
+test:
+	docker-compose --file=docker-compose-test.yaml up
+test-build:
+	docker-compose --file=docker-compose-test.yaml up --build
+run:
 	sh ./get-local-ip-addr.sh
-	docker-compose --file=docker-compose-prd.yaml up
-prd-build:
+	docker-compose up -d
+run-build:
 	sh ./get-local-ip-addr.sh
-	docker-compose --file=docker-compose-prd.yaml up --build
-dev:
-	sh ./get-local-ip-addr.sh
-	docker-compose --file=docker-compose.yaml up -d
-dev-build:
-	sh ./get-local-ip-addr.sh
-	docker-compose --file=docker-compose.yaml up --build -d
+	docker-compose up --build -d

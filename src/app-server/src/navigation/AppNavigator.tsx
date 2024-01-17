@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import BusScreen from '../screens/BusScreen';
 import ShopSearchScreen from '../screens/ShopSearchScreen';
-import ShopListScreen from '../screens/ShopListScreen';
+// import ShopListScreen from '../screens/ShopListScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 
 // 画面遷移はスタックで管理する
@@ -22,21 +22,16 @@ const ShopStackNavigator = () => {
       }}
     >
       <Stack.Screen
-        name="ShopSearchScreen"
+        name="お店探し"
         component={ShopSearchScreen} 
-        options={{
-          headerShown: false,
-          headerTitle: 'お店検索',
-        }}
+        options={({route}) => ({
+          headerShown: route.state && route.state.index > 0 ? true : false,
+        })}
       />
       <Stack.Screen
-        name="ShopDetailScreen"
+        name="お店の詳細"
         component={ShopDetailScreen}
-        options={{
-          headerShown: true,
-          headerTitle: 'お店の詳細',
-          headerBackTitle: '戻る',
-        }}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );
@@ -46,30 +41,28 @@ const ShopStackNavigator = () => {
 const AppNavigator: React.FC = () => {
   return (
     <Tab.Navigator
-      initialRouteName="ShopTab"
+      initialRouteName="お店検索"
       screenOptions={{
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
       }}
     >
       <Tab.Screen
-        name="ShopTab"
+        name="お店検索"
         component={ShopStackNavigator}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcon name="store-search" color={color} size={size} />
           ),
-          tabBarLabel: 'お店検索'
         }}
       />
       <Tab.Screen
-        name="BusTab"
+        name="シャトルバス"
         component={BusScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcon name="bus-clock" color={color} size={size} />
           ),
-          tabBarLabel: 'シャトルバス'
         }}
       />
     </Tab.Navigator>

@@ -15,11 +15,7 @@ interface Shop {
     open_now: boolean;    // 現在営業中かどうか
     rating: number;     // 評価
     campus: string;     // キャンパス
-    payment: {
-        cash: boolean;      // 現金
-        card: boolean;    // クレジットカード
-        paypay: boolean;    // PayPay
-    };  // 支払い方法
+    payment_methods: string[];  // 支払い方法
 }
 
 export default Shop;
