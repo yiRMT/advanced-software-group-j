@@ -2,10 +2,7 @@ version: '3.8'
 services:
   web-server:
     container_name: web-server
-    build:
-      context: .
-      dockerfile: ./build/web-server/Dockerfile
-    image: advanced-software-group-j-web-server:development
+    image: yirmt/advanced-software-group-j-web-server
     volumes:
       - ./src/web-server/default.conf:/etc/nginx/conf.d/default.conf
     ports:
