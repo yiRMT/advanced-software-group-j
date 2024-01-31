@@ -1,9 +1,8 @@
 // screens/BusScreen.tsx
 // シャトルバスの時刻表を表示するScreen
-import React, { useEffect, useState, useRef } from 'react';
-import { View, FlatList, SafeAreaView, Text, StyleSheet, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, SafeAreaView, Text, StyleSheet, TextStyle, StyleProp } from 'react-native';
 import Bus from '../interface/Bus';
-import busData from '../test_data/bus_output.json';
 import { fetchBusData } from '../libs/fetchBusData';
 
 const BusScreen: React.FC = () => {

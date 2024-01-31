@@ -6,7 +6,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import BusScreen from '../screens/BusScreen';
 import ShopSearchScreen from '../screens/ShopSearchScreen';
-import ShopListScreen from '../screens/ShopListScreen';
 import ShopDetailScreen from '../screens/ShopDetailScreen';
 
 // 画面遷移はスタックで管理する

@@ -30,7 +30,7 @@ Expoクライアントアプリから`http://LOCAL_IP_ADDR:8081`にアクセス�
 
 (注意) クライアントとDockerコンテナを起動しているPCは同一ネットワークに存在する必要がある。
 
-## 開発時
+### 開発時
 
 以下のコマンドでDockerコンテナを起動する
 ```bash
@@ -40,3 +40,29 @@ make run
 ```bash
 make run-build
 ```
+
+## 仕様
+
+本プロジェクトはリバースプロキシ、フロントエンド、バックエンドに分けられる。
+
+### リバースプロキシ
+
+ToDo
+
+### フロントエンド
+
+- 使用言語
+  - TypeScript (JavaScript)
+
+- 使用フレームワーク・ライブラリ
+  - [React Native](https://reactnative.dev)
+  - [Expo](https://expo.dev)
+  - [React Navigation](https://reactnavigation.org)
+
+### バックエンド
+
+- 使用言語
+  - Python
+
+- 使用フレームワーク・ライブラリ
+  - [FastAPI](https://fastapi.tiangolo.com)
