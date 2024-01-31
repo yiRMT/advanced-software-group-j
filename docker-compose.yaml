@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./build/web-server/Dockerfile
-    image: yirmt/advanced-software-group-j-web-server:development
+    image: advanced-software-group-j-web-server:development
     volumes:
       - ./src/web-server/default.conf:/etc/nginx/conf.d/default.conf
     ports:
@@ -25,7 +25,7 @@ services:
     build:
       context: .
       dockerfile: ./build/api-server/dev/Dockerfile
-    image: yirmt/advanced-software-group-j-api-server:development
+    image: advanced-software-group-j-api-server:development
     volumes:
       - ./src/api-server:/app
     ports:
@@ -45,7 +45,7 @@ services:
     build: 
       context: .
       dockerfile: ./build/app-server/dev/Dockerfile
-    image: yirmt/advanced-software-group-j-app-server:development
+    image: advanced-software-group-j-app-server:development
     volumes:
       - ./src/app-server:/app
     ports:
